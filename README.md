@@ -12,5 +12,5 @@ This program takes two arguments; the first being a plain text file with all pla
 After this you will be shown statistics on the data such as mean, max and min values, variance and standard deviation. It does this for both placement groups on hosts and vice versa, and then asks if you want a histogram drawn which looks like this: ![](http://i.imgur.com/jlTAxBo.png)
 Note: you can use the far right button on the histogram window to save it to a PNG formatted image. 
 
-For the test files the histogram will look weird on 'PGsPools26' because the frequency is always 19 however on 'PGsPools25' the histogram looks more normal. 
+For the test files the histogram will look weird on 'PGsPools25' because the frequency is always 19 however on 'PGsPools25' the histogram looks more normal. 
 
