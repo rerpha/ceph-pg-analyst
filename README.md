@@ -2,7 +2,7 @@
 
 ## ceph-pg-analyst analyses some of the data for the CEPH storage and gives statistics such as standard distribution and variance of hosts and placement groups. 
 
-### Requires [numpy](http://www.numpy.org/) and [matplotlib](http://matplotlib.org/)  modules as it uses them for the statistics and histograms. It does check if these are installed and will print an error code if you don't have them installed. 
+### Requires [NumPy](http://www.numpy.org/) and [matplotlib](http://matplotlib.org/)  modules as it uses them for the statistics and histograms. It does check if these are installed and will print an error code if you don't have them installed. 
 
 This program takes two arguments; the first being a plain text file with all placement groups of the files in brackets, and the second being a grid tree in JSON format. For example: 
 
