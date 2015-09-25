@@ -4,6 +4,8 @@
 
 ### Requires [NumPy](http://www.numpy.org/) and [matplotlib](http://matplotlib.org/)  modules as it uses them for the statistics and histograms. It does check if these are installed and will print an error code if you don't have them installed. 
 
+note : the python 3 code will be finished after the 2.7 version or may just be merged into the code with a function that checks python version. For the time being, the code is applicable to python 2.7 when being developed.
+
 This program takes two arguments(at the moment); the first being a plain text file with all placement groups of the files in brackets, and the second being a grid tree in JSON format. For example: 
 
 ` python -i p2nhcv4.py ./testfiles/PGsPool26 ./testfiles/grid-tree.json 
