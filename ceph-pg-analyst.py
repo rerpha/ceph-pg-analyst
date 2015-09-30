@@ -173,7 +173,8 @@ hist_opt = raw_input("would you like a histogram of the hosts per pg?(y/n)")
 if hist_opt == 'yes' or hist_opt == 'y' \
   or hist_opt == 'Y' or hist_opt == 'Yes':
     plt.hist(host_per_pg)
-    plt.title("Hosts per pg histogram")
+    title_hist = "Hosts per pg histogram on", argv[1][-6:]
+    plt.title(title_hist)
     plt.xlabel("No. of hosts")
     plt.ylabel("Frequency")
     plt.show()
