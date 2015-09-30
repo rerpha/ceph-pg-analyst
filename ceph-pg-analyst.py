@@ -28,7 +28,7 @@ else:
     
 # if needs scrapping delete from here
 if len(argv) >= 4:
-    for item in argv[1:2]:
+    for item in argv[1:3]:
         print item
         with open(item) as pfg:  # uses the second argument in the command line
             pf = map(eval, map(str.strip, pfg.readlines()))
@@ -73,7 +73,7 @@ if len(argv) >= 4:
 # stats on pgs per host
         print
         print
-        print argv[1][-6:]
+        print item[-6:]
         print
         print "for placement groups on hosts: "
         print "the mean is: ", mean
