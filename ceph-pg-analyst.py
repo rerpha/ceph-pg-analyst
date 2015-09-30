@@ -9,8 +9,9 @@ from json import load  # imports load from the json module
 import numpy  # imports the entire numpy module
 import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
-import os
+import os # imports the entire os module as several functions are used
 from shutil import rmtree
+
 try:
     find_module('numpy')  # makes sure numpy is installed
     find_module('matplotlib')  # makes sure matplotlib is installed
