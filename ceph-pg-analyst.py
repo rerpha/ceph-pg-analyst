@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
 import os # imports the entire os module as several functions are used
 from shutil import rmtree
-
 def statprint():
     val = pg_per_host.values()  # sets val to a list of the values in pg_per_host
     mean = numpy.mean(val)
@@ -43,23 +42,6 @@ def statprint():
     print "the standard deviation is: ", host_std
     print "the median is: ", host_median
     print "the variance is: ", host_variance
-
-
-def pgpf():
-    for pg in pf:
-        pg_hosts = set()
-        for osd in pg:
-            hostname = osd2host[osd]
-            pg_per_host[hostname] += 1
-            pg_hosts.add(hostname)
-        host_per_pg.append(len(pg_hosts))
-        
-def h_in_hosts():
-        for h in hosts:
-            name = h['name']
-            for c in h['children']:
-                osd2host[c] = name
-        
 try:
     find_module('numpy')  # makes sure numpy is installed
     find_module('matplotlib')  # makes sure matplotlib is installed
@@ -73,7 +55,14 @@ if foundmodule == False:  # if the foundmodule is anything but True
     print(module_error_message)  # outputs the error message string
 else:
     pass  # otherwise, code continues running
-    
+def pg_pf():
+        for pg in pf:
+            pg_hosts = set()
+            for osd in pg:
+                hostname = osd2host[osd]
+                pg_per_host[hostname] += 1
+                pg_hosts.add(hostname)
+            host_per_pg.append(len(pg_hosts))
 # if needs scrapping delete from here
 if len(argv) == 4:
     i = 1
@@ -87,22 +76,25 @@ if len(argv) == 4:
                  tree = load(treefile)
    
         hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
-
+    
         osd2host = {}  
-        h_in_hosts()
+
+        for h in hosts:
+            name = h['name']
+            for c in h['children']:
+                osd2host[c] = name
                 
         pg_per_host = Counter()
         host_per_pg = []
+        pg_pf()
 
-        pgpf()
-            
         # stats on pgs per host
-        print
-        print
-        print item[-6:]
+        print ""
+        print ""
+        print "", item[-6:]
         statprint()
         i += 1
-    exit(-1)           
+    exit()           
 else: 
     pass
 # to here
@@ -122,7 +114,10 @@ hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
 # dictionary which was assigned earlier
 osd2host = {}  # empty dictionary
 
-h_in_hosts()
+for h in hosts:
+    name = h['name']
+    for c in h['children']:
+        osd2host[c] = name
 
     # osd2host = { c: name for c in h['children'] }
     # loops though hosts and assigns keys and values
@@ -130,8 +125,7 @@ pg_per_host = Counter()
 host_per_pg = []
 # pg_per_host is assigned to a counter, which is from the collections module
 # host_per_pg is assigned to a blank list
-
-pgpf()
+pg_pf()
     # pg_hosts is a set so no values are duplicated because this is looking
     # at unique host names rather than doubled up ones.
 
