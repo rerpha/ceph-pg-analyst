@@ -54,6 +54,12 @@ def pgpf():
             pg_hosts.add(hostname)
         host_per_pg.append(len(pg_hosts))
         
+def h_in_hosts():
+        for h in hosts:
+            name = h['name']
+            for c in h['children']:
+                osd2host[c] = name
+        
 try:
     find_module('numpy')  # makes sure numpy is installed
     find_module('matplotlib')  # makes sure matplotlib is installed
@@ -83,11 +89,7 @@ if len(argv) == 4:
         hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
 
         osd2host = {}  
-
-        for h in hosts:
-            name = h['name']
-            for c in h['children']:
-                osd2host[c] = name
+        h_in_hosts()
                 
         pg_per_host = Counter()
         host_per_pg = []
@@ -120,10 +122,7 @@ hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
 # dictionary which was assigned earlier
 osd2host = {}  # empty dictionary
 
-for h in hosts:
-    name = h['name']
-    for c in h['children']:
-        osd2host[c] = name
+h_in_hosts()
 
     # osd2host = { c: name for c in h['children'] }
     # loops though hosts and assigns keys and values
