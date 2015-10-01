@@ -136,8 +136,8 @@ print argv[1][-6:]
 statprint()
 
 try: 
-    hist_opt = argv[4]
-    file_name = argv[5]
+    hist_opt = argv[3]
+    file_name = argv[4]
 except:
     pass
 if len(argv) == 3:
@@ -154,7 +154,6 @@ if len(argv) == 3:
         of the histogram to your local directory unless specified \
         otherwise. ")
 elif hist_opt == '-h':
-    matplotlib.use('Agg')
     plt.hist(host_per_pg)
     title_hist = "Hosts per pg histogram on", argv[1][-6:]
     plt.title(title_hist)
