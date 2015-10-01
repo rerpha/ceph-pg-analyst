@@ -4,6 +4,7 @@
 # written in python 2.7, however a library called 2to3
 # allows this program to be run on python 3.x
 from sys import argv  # imports argv from sys module
+from sys import exit
 from collections import Counter  # imports Counter from collections module
 from json import load  # imports load from the json module
 import numpy  # imports the entire numpy module
@@ -28,17 +29,17 @@ else:
     
 # if needs scrapping delete from here
 if len(argv) >= 4:
+    i = 1
     for item in argv[1:3]:
-        print item
         with open(item) as pfg:  # uses the second argument in the command line
             pf = map(eval, map(str.strip, pfg.readlines()))
     # opens a plain text file which has all the PGs in according to OSD names
     # this is then mapped and evaluated and is stored as a list of lists.
 
         hosts = {}  # empty dictionary
-
-        with open(argv[3]) as treefile:
-             tree = load(treefile)
+        if i == 1:
+            with open(argv[3]) as treefile:
+                 tree = load(treefile)
     # second command line argument should be a JSON treefile
         hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
 # filters out the host and nodes to be stored as keypairs in the host
@@ -97,7 +98,8 @@ if len(argv) >= 4:
         print "the standard deviation is: ", host_std
         print "the median is: ", host_median
         print "the variance is: ", host_variance
-                
+        i += 1
+    exit(-1)           
 else: 
     pass
 # to here
