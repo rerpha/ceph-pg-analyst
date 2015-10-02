@@ -64,7 +64,13 @@ def pg_pf():
                 pg_hosts.add(hostname)
             host_per_pg.append(len(pg_hosts))
 # if needs scrapping delete from here
-if len(argv) == 4:
+arg_3 = ''
+try:
+    arg_3 = argv[3]
+except:
+    pass
+
+if 'json' in arg_3:
     i = 1
     for item in argv[1:3]:
         with open(item) as pfg: 
@@ -134,13 +140,13 @@ print
 print
 print argv[1][-6:]
 statprint()
-
+hist_opt = ''
 try: 
     hist_opt = argv[3]
     file_name = argv[4]
 except:
     pass
-if len(argv) == 3:
+if hist_opt == '-H' or len(argv) == 3:
     if 'DISPLAY' in os.environ:
         plt.hist(host_per_pg)
         title_hist = "Hosts per pg histogram on", argv[1][-6:]
