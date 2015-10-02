@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
 import os
 from shutil import rmtree
+<<<<<<< HEAD
 
 def statprint():
     val = pg_per_host.values()  # sets val to a list of the values in pg_per_host
@@ -43,6 +44,8 @@ def statprint():
     print "the standard deviation is: ", host_std
     print "the median is: ", host_median
     print "the variance is: ", host_variance
+=======
+>>>>>>> master
 try:
     find_module('numpy')  # makes sure numpy is installed
     find_module('matplotlib')  # makes sure matplotlib is installed
