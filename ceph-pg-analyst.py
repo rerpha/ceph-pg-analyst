@@ -150,7 +150,7 @@ if len(argv) == 3:
         plt.show()
     else:
         print("You do not have a display manager installed \
-        use the -h tag at the end of the script to save a picture\
+        use the -h tag at the end of the script to save a picture \
         of the histogram to your local directory unless specified \
         otherwise. ")
 elif hist_opt == '-h':
@@ -159,8 +159,7 @@ elif hist_opt == '-h':
     plt.title(title_hist)
     plt.xlabel("No. of hosts")
     plt.ylabel("Frequency")
-    fig = plt.figure()
-    fig.savefig(file_name)
+    plt.savefig(file_name)
 else:
    pass
 
