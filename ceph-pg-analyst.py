@@ -177,7 +177,7 @@ elif hist_opt == '-h':
     plt.xlabel("No. of hosts")
     plt.ylabel("Frequency")
     if os.path.isfile(argv[4]) == True: 
-        file_opt = raw_input("this file already exists. do you want to overwrite? (y/n)")
+        file_opt = raw_input("this file already exists. do you want to overwrite? (y/n) \n")
         if file_opt in y_list:
             pass
         if file_opt in n_list: 
