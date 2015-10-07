@@ -72,6 +72,9 @@ try:
 except:
     pass
 
+y_list = ['yes','y','Y','Yes','YES']
+n_list = ['no','n','N','No','NO']
+
 if 'json' in arg_3:
     i = 1
     for item in argv[1:3]:
@@ -141,7 +144,6 @@ host_per_pg = []
 pg_pf()
     # pg_hosts is a set so no values are duplicated because this is looking
     # at unique host names rather than doubled up ones.
-
 # stats on pgs per host
 print
 print
@@ -153,6 +155,8 @@ try:
     file_name = argv[4]
 except:
     pass
+    
+
 if hist_opt == '-H' or len(argv) == 3:
     if 'DISPLAY' in os.environ:
         plt.hist(host_per_pg)
@@ -172,8 +176,14 @@ elif hist_opt == '-h':
     plt.title(title_hist)
     plt.xlabel("No. of hosts")
     plt.ylabel("Frequency")
+    if os.path.isfile(argv[4]) == True: 
+        file_opt = raw_input("this file already exists. do you want to overwrite? (y/n)")
+        if file_opt in y_list:
+            pass
+        if file_opt in n_list: 
+            exit()
+    else:
+        pass
     plt.savefig(file_name)
 else:
    pass
-
-
