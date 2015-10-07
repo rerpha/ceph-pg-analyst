@@ -109,8 +109,16 @@ if 'json' in arg_3:
         else: # uses two different lists to plot a multi line histogram
             list_arg2 = host_per_pg # a different list for each line/bar on the histogram 
         i += 1
-    
-    exit()           
+
+    plt.hist(list_arg1, alpha=0.5, label=argv[1][-6:])
+    plt.hist(list_arg2, alpha= 0.5, label=argv[2][-6:])
+    plt.legend(loc='upper right')
+    try:
+        plt.show()
+    except:
+        print("no display manager installed")
+    exit()
+              
 else: 
     pass
 # to here
