@@ -9,11 +9,14 @@
 note : the python 3 code will be finished after the 2.7 version or may just be merged into the code with a function that checks python version. For the time being, the code is applicable to python 2.7 when being developed.
 
 
-This program takes two arguments(UPDATE: there is now a multi argument system being worked on available in the development branch which provides comparison between two datasets); the first being a plain text file with all placement groups of the files in brackets, and the second being a grid tree in JSON format. For example: 
+This program can take up to 2 PG pools for comparison however will work with one, and will save an image of two plots if two pool arguments are given. they must share the same OSD tree to work, it should be noted that only one JSON tree file can be used for the (up to) 2 arguments for the Placement group pools. With the multi argument histograms a key will be shown in the upper right and both datasets will be plotted. If you have a display manager installed this will show up in a seperate window and can be explored with the matplotlib window. 
 
 
-` python -i p2nhcv4.py ./testfiles/PGsPool26 ./testfiles/grid-tree.json 
-`
+` python -i ceph-pg-analyst.py ./testfiles/PGsPool26 ./testfiles/grid-tree.json -H`
+will show a histogram of PG pool 26 and 
+
+  `python -i ceph-pg-analyst.py ./testfiles/PGsPool25 ./testfiles/PGsPool26 ./testfiles/grid-tree.json -H`
+will show plots of both pools on one histogram 
 
 After this you will be shown statistics on the data such as mean, max and min values, variance and standard deviation. It does this for both placement groups on hosts and vice versa, and then asks if you want a histogram drawn which looks like this: ![](http://i.imgur.com/jlTAxBo.png)
 Note: you can use the far right button on the histogram window to save it to a PNG formatted image. 
