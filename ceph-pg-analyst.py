@@ -73,7 +73,6 @@ except:
     pass
 
 y_list = ['yes','y']
-n_list = ['no','n']
 
 if 'json' in arg_3:
     i = 1
