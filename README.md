@@ -19,7 +19,9 @@ will show a histogram of PG pool 26 and
 will show plots of both pools on one histogram 
 
 After this you will be shown statistics on the data such as mean, max and min values, variance and standard deviation. It does this for both placement groups on hosts and vice versa, and then asks if you want a histogram drawn which looks like this: ![](http://i.imgur.com/jlTAxBo.png)
+
 or this:
+
 ![](http://i.imgur.com/WP9syXC.png)
 Note: you can use the far right button on the histogram window to save it to a PNG formatted image. 
 
