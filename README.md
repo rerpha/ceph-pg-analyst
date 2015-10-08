@@ -1,4 +1,4 @@
-# ceph-pg-analyst - Analyst tool for placement groups, OSDs and Hosts on Ceph Storage clusters.
+# ceph-pg-analyst - Analyst tool for the distribution of placement groups, OSDs and Hosts on Ceph Storage clusters.
 
 ## ceph-pg-analyst analyses some of the data for the placement groups and hosts on CEPH storage and gives statistics such as standard distribution and variance. 
 
