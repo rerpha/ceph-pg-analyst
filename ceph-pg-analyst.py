@@ -72,8 +72,7 @@ try:
 except:
     pass
 
-y_list = ['yes','y','Y','Yes','YES']
-n_list = ['no','n','N','No','NO']
+y_list = ['yes','y']
 
 if 'json' in arg_3:
     i = 1
@@ -185,10 +184,10 @@ elif hist_opt == '-h':
     plt.xlabel("No. of hosts")
     plt.ylabel("Frequency")
     if os.path.isfile(argv[4]) == True: 
-        file_opt = raw_input("this file already exists. do you want to overwrite? (y/n) \n")
+        file_opt = raw_input("this file already exists. do you want to overwrite? (y/n) \n").lower()
         if file_opt in y_list:
             pass
-        if file_opt in n_list: 
+        else: 
             exit()
     else:
         pass
