@@ -109,12 +109,19 @@ osd2host = process_tree(tf)
 
 host_per_pg_dict = { splitext(x)[0]: process_pool(x, osd2host) for x in poolfiles }
 
+if os.path.isfile(plot_file): 
+    file_opt = raw_input("this file already exists. do you want to overwrite? (y/n) \n").lower()
+    if file_opt == 'y' :
+        pass
+    else: 
+        exit()
+
 if hist_opt:
     colors = ['b','g','r','c','m','y','k','w']
     for pool, series in host_per_pg_dict.items():
         print pool
         statprint(*series)
-        plt.hist(series[0], alpha=0.3, label=pool)
+        plt.hist(series[0], alpha=0.3, label=pool, )
     plt.legend(loc='upper right')
     plt.title("Hosts per pg histogram")
     plt.xlabel("No. of hosts")
@@ -127,3 +134,7 @@ if hist_opt:
             print("no display manager installed")
     elif hist_opt == 'h':
         plt.savefig(plot_file)
+
+
+
+
