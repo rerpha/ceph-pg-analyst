@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
 import os
 from shutil import rmtree
+from matplotlib.widgets import Slider
 
 def statprint():
     val = pg_per_host.values()  # sets val to a list of the values in pg_per_host
@@ -73,6 +74,10 @@ except:
     pass
 
 y_list = ['yes','y']
+try:
+    transparency = float(argv[4])
+except:
+    transparency = 0.5
 
 if 'json' in arg_3:
     i = 1
@@ -108,10 +113,10 @@ if 'json' in arg_3:
         else: # uses two different lists to plot a multi line histogram
             list_arg2 = host_per_pg # a different list for each line/bar on the histogram 
         i += 1
-
-    plt.hist(list_arg1, alpha=0.5, label=argv[1][-6:])
-    plt.hist(list_arg2, alpha= 0.5, label=argv[2][-6:])
+    plt.hist(list_arg1, alpha=transparency, label=argv[1][-6:],color='red')
+    plt.hist(list_arg2, alpha=transparency, label=argv[2][-6:],color='black')
     plt.legend(loc='upper right')
+    
     try:
         plt.show()
     except:
@@ -166,11 +171,12 @@ except:
 
 if hist_opt == '-H' or len(argv) == 3:
     if 'DISPLAY' in os.environ:
-        plt.hist(host_per_pg)
+        plt.hist(host_per_pg, alpha=transparency)
         title_hist = "Hosts per pg histogram on", argv[1][-6:]
         plt.title(title_hist)
         plt.xlabel("No. of hosts")
         plt.ylabel("Frequency")
+
         plt.show()
     else:
         print("You do not have a display manager installed \
