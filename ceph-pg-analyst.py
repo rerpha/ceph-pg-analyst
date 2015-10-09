@@ -11,10 +11,11 @@ import numpy  # imports the entire numpy module
 import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
 import os
+from os.path import splitext
 from shutil import rmtree
 from matplotlib.widgets import Slider
 
-def statprint():
+def statprint(host_per_pg, pg_per_host):
     val = pg_per_host.values()  # sets val to a list of the values in pg_per_host
     mean = numpy.mean(val)
     maxvalue = numpy.amax(val)
@@ -58,145 +59,71 @@ if foundmodule == False:  # if the foundmodule is anything but True
     print(module_error_message)  # outputs the error message string
 else:
     pass  # otherwise, code continues running
-def pg_pf():
-        for pg in pf:
+
+def process_tree(tf):
+    with open(tf) as treefile:
+         tree = load(treefile)
+
+    hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
+
+    osd2host = {}
+
+    for h in hosts:
+        name = h['name']
+        for c in h['children']:
+            osd2host[c] = name
+    return osd2host
+
+def process_pool(pf, osd2host):
+    with open(pf) as pfd:
+        osd_lists = map(eval, map(str.strip, pfd.readlines()))
+        host_per_pg = []
+        pg_per_host = Counter()
+        for pg in osd_lists:
             pg_hosts = set()
             for osd in pg:
                 hostname = osd2host[osd]
                 pg_per_host[hostname] += 1
                 pg_hosts.add(hostname)
             host_per_pg.append(len(pg_hosts))
+    return host_per_pg, pg_per_host
 # if needs scrapping delete from here
-arg_3 = ''
-try:
-    arg_3 = argv[3]
-except:
-    pass
 
-y_list = ['yes','y']
-try:
-    transparency = float(argv[4])
-except:
-    transparency = 0.5
+del(argv[0])
+if argv[0] in ['-h','-H']:
+    hist_opt = argv[0][1]
+    if hist_opt == 'h':
+        plot_file = argv[1]
+        del(argv[1])
+    del(argv[0])
+else:
+    hist_opt = None
 
-if 'json' in arg_3:
-    i = 1
-    for item in argv[1:3]:
-        with open(item) as pfg: 
-            pf = map(eval, map(str.strip, pfg.readlines()))
-    
-        hosts = {}  
-        if i == 1:
-            with open(argv[3]) as treefile:
-                 tree = load(treefile)
-   
-        hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
-    
-        osd2host = {}  
 
-        for h in hosts:
-            name = h['name']
-            for c in h['children']:
-                osd2host[c] = name
-                
-        pg_per_host = Counter()
-        host_per_pg = []
-        pg_pf()
+tf = argv[0]
+del(argv[0])
 
-        # stats on pgs per host
-        print ""
-        print ""
-        print "", item[-6:]
-        statprint()
-        if i == 1:
-            list_arg1 = host_per_pg # for use outside the for loop
-        else: # uses two different lists to plot a multi line histogram
-            list_arg2 = host_per_pg # a different list for each line/bar on the histogram 
-        i += 1
-    plt.hist(list_arg1, alpha=transparency, label=argv[1][-6:],color='red')
-    plt.hist(list_arg2, alpha=transparency, label=argv[2][-6:],color='black')
+poolfiles = argv
+
+osd2host = process_tree(tf)
+
+host_per_pg_dict = { splitext(x)[0]: process_pool(x, osd2host) for x in poolfiles }
+
+if hist_opt:
+    colors = ['b','g','r','c','m','y','k','w']
+    for pool, series in host_per_pg_dict.items():
+        print pool
+        statprint(*series)
+        plt.hist(series[0], alpha=0.3, label=pool)
     plt.legend(loc='upper right')
-    
-    try:
-        plt.show()
-    except:
-        print("no display manager installed")
-    exit()
-              
-else: 
-    pass
-# to here
-
-with open(argv[1]) as pfg:  # uses the second argument in the command line
-    pf = map(eval, map(str.strip, pfg.readlines()))
-    # opens a plain text file which has all the PGs in according to OSD names
-    # this is then mapped and evaluated and is stored as a list of lists.
-
-hosts = {}  # empty dictionary
-
-with open(argv[2]) as treefile:
-    tree = load(treefile)
-    # second command line argument should be a JSON treefile
-hosts = filter(lambda x: True if x['type'] == 'host' else False, tree['nodes'])
-# filters out the host and nodes to be stored as keypairs in the host
-# dictionary which was assigned earlier
-osd2host = {}  # empty dictionary
-
-for h in hosts:
-    name = h['name']
-    for c in h['children']:
-        osd2host[c] = name
-
-    # osd2host = { c: name for c in h['children'] }
-    # loops though hosts and assigns keys and values
-pg_per_host = Counter()
-host_per_pg = []
-# pg_per_host is assigned to a counter, which is from the collections module
-# host_per_pg is assigned to a blank list
-pg_pf()
-    # pg_hosts is a set so no values are duplicated because this is looking
-    # at unique host names rather than doubled up ones.
-# stats on pgs per host
-print
-print
-print argv[1][-6:]
-statprint()
-hist_opt = ''
-try: 
-    hist_opt = argv[3]
-    file_name = argv[4]
-except:
-    pass
-    
-
-if hist_opt == '-H' or len(argv) == 3:
-    if 'DISPLAY' in os.environ:
-        plt.hist(host_per_pg, alpha=transparency)
-        title_hist = "Hosts per pg histogram on", argv[1][-6:]
-        plt.title(title_hist)
-        plt.xlabel("No. of hosts")
-        plt.ylabel("Frequency")
-
-        plt.show()
-    else:
-        print("You do not have a display manager installed \
-        use the -h tag at the end of the script to save a picture \
-        of the histogram to your local directory unless specified \
-        otherwise. ")
-elif hist_opt == '-h':
-    plt.hist(host_per_pg)
-    title_hist = "Hosts per pg histogram on", argv[1][-6:]
-    plt.title(title_hist)
+    plt.title("Hosts per pg histogram")
     plt.xlabel("No. of hosts")
     plt.ylabel("Frequency")
-    if os.path.isfile(argv[4]) == True: 
-        file_opt = raw_input("this file already exists. do you want to overwrite? (y/n) \n").lower()
-        if file_opt in y_list:
-            pass
-        else: 
-            exit()
-    else:
-        pass
-    plt.savefig(file_name)
-else:
-   pass
+
+    if hist_opt == 'H':
+        try:
+            plt.show()
+        except:
+            print("no display manager installed")
+    elif hist_opt == 'h':
+        plt.savefig(plot_file)
