@@ -14,7 +14,7 @@ import os
 from os.path import splitext
 from shutil import rmtree
 from matplotlib.widgets import Slider
-
+plot_file='' #needs to be set up outside function otherwise try: is needed
 def statprint(host_per_pg, pg_per_host):
     val = pg_per_host.values()  # sets val to a list of the values in pg_per_host
     mean = numpy.mean(val)
