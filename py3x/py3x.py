@@ -23,13 +23,13 @@ def statprint(host_per_pg, pg_per_host):
     std = numpy.std(val)
     median = numpy.median(val)
     variance = numpy.var(val)
-    print "for placement groups on hosts: "
-    print "the mean is: ", mean
-    print "the max value is: ", maxvalue
-    print "the min value is: ", minvalue
-    print "the standard deviation is: ", std
-    print "the median is: ", median
-    print "the variance is: ", variance
+    print("for placement groups on hosts: ")
+    print( "the mean is: ", mean)
+    print( "the max value is: ", maxvalue)
+    print( "the min value is: ", minvalue)
+    print( "the standard deviation is: ", std)
+    print( "the median is: ", median)
+    print( "the variance is: ", variance)
     # prints statements for stats
     host_mean = numpy.mean(host_per_pg)
     host_max = numpy.amax(host_per_pg)
@@ -38,13 +38,13 @@ def statprint(host_per_pg, pg_per_host):
     host_median = numpy.median(host_per_pg)
     host_variance = numpy.var(host_per_pg)
     # these are the variables for hosts/pgs
-    print "hosts per placement group: "
-    print "the mean is: ", host_mean
-    print "the max value is: ", host_max
-    print "the min value is: ", host_min
-    print "the standard deviation is: ", host_std
-    print "the median is: ", host_median
-    print "the variance is: ", host_variance
+    print("hosts per placement group: ")
+    print("the mean is: ", host_mean)
+    print("the max value is: ", host_max)
+    print("the min value is: ", host_min)
+    print("the standard deviation is: ", host_std)
+    print("the median is: ", host_median)
+    print("the variance is: ", host_variance)
 
 try:
     find_module('numpy')  # makes sure numpy is installed
@@ -112,7 +112,7 @@ host_per_pg_dict = { splitext(x)[0]: process_pool(x, osd2host) for x in poolfile
 if hist_opt:
     colors = ['b','g','r','c','m','y','k','w']
     for pool, series in host_per_pg_dict.items():
-        print pool
+        print(pool)
         statprint(*series)
         plt.hist(series[0], alpha=0.3, label=pool)
     plt.legend(loc='upper right')

@@ -90,9 +90,9 @@ def process_pool(pf, osd2host):
 # if needs scrapping delete from here
 
 del(argv[0])
-if argv[0] in ['-h','-H']:
+if argv[0] in ['-h','-H','-s']:
     hist_opt = argv[0][1]
-    if hist_opt == 'h':
+    if hist_opt == 's':
         plot_file = argv[1]
         del(argv[1])
     del(argv[0])
@@ -115,13 +115,19 @@ if os.path.isfile(plot_file):
         pass
     else: 
         exit()
+if hist_opt == 'h':
+    for pool, series in host_per_pg_dict.items():
+        print pool
+        statprint(*series)
+        plt.hist(series[0], alpha=0.5, label=pool, stacked=False )
+        plt.show()
 
 if hist_opt:
     colors = ['b','g','r','c','m','y','k','w']
     for pool, series in host_per_pg_dict.items():
         print pool
         statprint(*series)
-        plt.hist(series[0], alpha=0.3, label=pool, )
+        plt.hist(series[0], alpha=0.5, label=pool, stacked=False )
     plt.legend(loc='upper right')
     plt.title("Hosts per pg histogram")
     plt.xlabel("No. of hosts")
@@ -132,9 +138,7 @@ if hist_opt:
             plt.show()
         except:
             print("no display manager installed")
-    elif hist_opt == 'h':
+    elif hist_opt == 's':
         plt.savefig(plot_file)
-
-
-
+    
 
