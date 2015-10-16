@@ -90,7 +90,7 @@ def process_pool(pf, osd2host):
 # if needs scrapping delete from here
 
 del(argv[0])
-if argv[0] in ['-h','-H','-s']:
+if argv[0] in ['-h','-H','-s','-b','-v']:
     hist_opt = argv[0][1]
     if hist_opt == 's':
         plot_file = argv[1]
@@ -115,30 +115,34 @@ if os.path.isfile(plot_file):
         pass
     else: 
         exit()
-if hist_opt == 'h':
-    for pool, series in host_per_pg_dict.items():
-        print pool
-        statprint(*series)
-        plt.hist(series[0], alpha=1, label=pool,)
-        plt.show()
+def iter_pool():
+    print pool
+    statprint(*series)
+    plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
 
 if hist_opt:
     colors = ['b','g','r','c','m','y','k','w']
-    for pool, series in host_per_pg_dict.items():
-        print pool
-        statprint(*series)
-        plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
-    plt.legend(loc='upper right')
-    plt.title("Hosts per pg histogram")
-    plt.xlabel("No. of hosts")
-    plt.ylabel("Frequency")
-
     if hist_opt == 'H':
+        for pool, series in host_per_pg_dict.items():
+           iter_pool()
+        plt.legend(loc='upper right')
+        plt.title("Hosts per pg histogram")
+        plt.xlabel("No. of hosts")
+        plt.ylabel("Frequency")
         try:
             plt.show()
         except:
             print("no display manager installed")
     elif hist_opt == 's':
         plt.savefig(plot_file)
-    
-
+    elif hist_opt == 'h':
+        for pool, series in host_per_pg_dict.items():
+            iter_pool()
+            plt.show()
+    elif hist_opt == 'b':
+        for pool, series in host_per_pg_dict.items():
+            plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
+        plt.show()
+    elif hist_opt == 'v':
+        print pool
+        statprint(*series)
