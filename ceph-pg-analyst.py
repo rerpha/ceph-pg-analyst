@@ -119,7 +119,7 @@ if hist_opt == 'h':
     for pool, series in host_per_pg_dict.items():
         print pool
         statprint(*series)
-        plt.hist(series[0], alpha=0.5, label=pool, stacked=False )
+        plt.hist(series[0], alpha=1, label=pool,)
         plt.show()
 
 if hist_opt:
@@ -127,7 +127,7 @@ if hist_opt:
     for pool, series in host_per_pg_dict.items():
         print pool
         statprint(*series)
-        plt.hist(series[0], alpha=0.5, label=pool, stacked=False )
+        plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
     plt.legend(loc='upper right')
     plt.title("Hosts per pg histogram")
     plt.xlabel("No. of hosts")
