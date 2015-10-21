@@ -7,6 +7,7 @@ from sys import argv  # imports argv from sys module
 from sys import exit
 from collections import Counter  # imports Counter from collections module
 from json import load  # imports load from the json module
+import matplotlib
 import numpy  # imports the entire numpy module
 import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
@@ -124,7 +125,11 @@ if hist_opt:
     colors = ['b','g','r','c','m','y','k','w']
     if hist_opt == 'H':
         for pool, series in host_per_pg_dict.items():
-           iter_pool()
+            try:
+                iter_pool()
+            except:
+                matplotlib.use('Agg')
+                iter_pool()
         plt.legend(loc='upper right')
         plt.title("Hosts per pg histogram")
         plt.xlabel("No. of hosts")
