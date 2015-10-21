@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
 from shutil import rmtree
 from matplotlib.widgets import Slider
+import mpld3
 plot_file='' #needs to be set up outside function otherwise try: is needed
 def statprint(host_per_pg, pg_per_host):
     val = pg_per_host.values()  # sets val to a list of the values in pg_per_host
@@ -93,7 +94,7 @@ def process_pool(pf, osd2host):
 # if needs scrapping delete from here
 
 del(argv[0])
-if argv[0] in ['-h','-H','-s','-b','-v']:
+if argv[0] in ['-h','-H','-s','-b','-v','-w']:
     hist_opt = argv[0][1]
     if hist_opt == 's':
         plot_file = argv[1]
@@ -153,3 +154,7 @@ if hist_opt:
     elif hist_opt == 'v':
         print pool
         statprint(*series)
+    elif hist_opt == 'w':
+        for pool, series in host_per_pg_dict.items():
+            plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
+        mpld3.show()
