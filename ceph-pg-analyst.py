@@ -10,7 +10,7 @@ from os.path import splitext
 from collections import Counter  # imports Counter from collections module
 from json import load  # imports load from the json module
 import matplotlib
-if not os.environ['DISPLAY']:
+if not os.environ.get('DISPLAY'):
     matplotlib.use('Agg')
 import numpy  # imports the entire numpy module
 import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
