@@ -5,14 +5,16 @@
 # allows this program to be run on python 3.x
 from sys import argv  # imports argv from sys module
 from sys import exit
+import os
+from os.path import splitext
 from collections import Counter  # imports Counter from collections module
 from json import load  # imports load from the json module
 import matplotlib
+if not os.environ['DISPLAY']:
+    matplotlib.use('Agg')
 import numpy  # imports the entire numpy module
 import matplotlib.pyplot as plt  # imports pyplot from matplotlib, calls at plt
 from imp import find_module  # imports find_module from imp
-import os
-from os.path import splitext
 from shutil import rmtree
 from matplotlib.widgets import Slider
 plot_file='' #needs to be set up outside function otherwise try: is needed
