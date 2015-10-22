@@ -91,10 +91,9 @@ def process_pool(pf, osd2host):
                 pg_hosts.add(hostname)
             host_per_pg.append(len(pg_hosts))
     return host_per_pg, pg_per_host
-# if needs scrapping delete from here
 
 del(argv[0])
-if argv[0] in ['-h','-H','-s','-b','-v','-w' """-x"""]:
+if argv[0] in ['-h','-H','-s','-b','-v','-w']:
     hist_opt = argv[0][1]
     if hist_opt == 's':
         plot_file = argv[1]
@@ -111,7 +110,11 @@ poolfiles = argv
 
 osd2host = process_tree(tf)
 
-host_per_pg_dict = { splitext(x)[0]: process_pool(x, osd2host) for x in poolfiles }
+try:
+    host_per_pg_dict = { splitext(x)[0]: process_pool(x, osd2host) for x in poolfiles }
+except:
+    print("file error; one of the files is not compatible with this program. ")
+    exit()
 
 if os.path.isfile(plot_file): 
     file_opt = raw_input("this file already exists. do you want to overwrite? (y/n) \n").lower()
