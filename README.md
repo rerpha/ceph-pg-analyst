@@ -8,6 +8,7 @@
 
 note : the python 3 code will be finished after the 2.7 version or may just be merged into the code with a function that checks python version. For the time being, the code is applicable to python 2.7 when being developed.
 
+To make this program auto update a server use cron, the server will continue running when refreshed. 
 
 This program can (now) take any amount of pools providing they share the same JSON tree. the usage of this is shown above. 
 
