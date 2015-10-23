@@ -2,7 +2,7 @@
 
 ## ceph-pg-analyst analyses some of the data for the placement groups and hosts on Ceph storage and gives statistics such as standard distribution and variance. 
 
-### Requires [NumPy](http://www.numpy.org/) and [matplotlib](http://matplotlib.org/)  modules as it uses them for the statistics and histograms. It does check if these are installed and will print an error code if you don't have them installed. 
+### Requires [NumPy](http://www.numpy.org/), [matplotlib](http://matplotlib.org/) and [mpld3](http://mpld3.github.io/)  modules as it uses them for the statistics and histograms. It does check if these are installed and will print an error code if you don't have them installed. 
 ### flags/usage = `ceph-pg-analyst.py -s "filepath/filename ~json tree~ ~pool names~"` will save an image of the histogram to the directory specified and `ceph-pg-analyst.py -H ~json tree~ ~pool names~` will show a histogram on screen for further manipulation, `ceph-pg-analyst.py -h ~filenames~ ` will show a seperate histogram for each data set, `-b` = only show histogram, `v` = only show stats , `-w`  = start webserver on localhost:8888
 
 
