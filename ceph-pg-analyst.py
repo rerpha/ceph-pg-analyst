@@ -18,6 +18,7 @@ from imp import find_module  # imports find_module from imp
 from shutil import rmtree
 from matplotlib.widgets import Slider
 import mpld3
+from socket import gethostbyname as ghbn
 plot_file='' #needs to be set up outside function otherwise try: is needed
 def statprint(host_per_pg, pg_per_host):
     val = pg_per_host.values()  # sets val to a list of the values in pg_per_host
@@ -160,8 +161,8 @@ if hist_opt:
         for pool, series in host_per_pg_dict.items():
             plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
         hist_labels()
-        plt.legend(framealpha=0)
-        mpld3.show()
+        plt.legend(fontsize= 'small', alpha= 0)
+        mpld3.show(ip=ghbn(socket.gethostname()))
 #   elif hist_opt == 'x':
 #        for pool, series in host_per_pg_dict.items():
 #            plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
