@@ -159,10 +159,12 @@ if hist_opt:
         for pool, series in host_per_pg_dict.items():
             iter_pool()
     elif hist_opt == 'w':
+        fig = plt.figure()
         for pool, series in host_per_pg_dict.items():
             plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
         hist_labels()
         plt.legend(fontsize= 'small', framealpha= 0)
+        mpld3.save_html(fig, './output.html')
         mpld3.show(ip=ghbn(socket.gethostname()))
     elif hist_opt == 'o':
         fig = plt.figure()
