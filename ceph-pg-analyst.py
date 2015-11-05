@@ -95,7 +95,7 @@ def process_pool(pf, osd2host):
     return host_per_pg, pg_per_host
 
 del(argv[0])
-if argv[0] in ['-h','-H','-s','-b','-v','-w']:
+if argv[0] in ['-h','-H','-s','-b','-v','-w','-o']:
     hist_opt = argv[0][1]
     if hist_opt == 's':
         plot_file = argv[1]
@@ -164,6 +164,15 @@ if hist_opt:
         hist_labels()
         plt.legend(fontsize= 'small', framealpha= 0)
         mpld3.show(ip=ghbn(socket.gethostname()))
+    elif hist_opt == 'o':
+        fig = plt.figure()
+        for pool, series in host_per_pg_dict.items():
+            plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
+        hist_labels()
+        plt.legend(fontsize= 'small', framealpha= 0)
+        mpld3.save_html(fig, './output.html')
+        print("saved. should display in the apache server now. ")
+
 #   elif hist_opt == 'x':
 #        for pool, series in host_per_pg_dict.items():
 #            plt.hist(series[0], alpha=1, label=pool,histtype='bar', stacked=True)
